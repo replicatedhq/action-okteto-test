@@ -1,12 +1,11 @@
 import core from '@actions/core';
 import axios from 'axios';
-import { randomUUID } from 'crypto';
 import { setInterval } from 'timers/promises';
 
 
 const OKTETO_API = 'https://replicated.okteto.dev/graphql';
 const OKTETO_TOKEN = core.getInput('token')
-const PREVIEW_NAME = randomUUID();
+const PREVIEW_NAME = process.env.GITHUB_REF_NAME;
 
 const statusQuery = {
     query: `
@@ -26,7 +25,7 @@ mutation{
         name: "${PREVIEW_NAME}"
         scope: global
         repository: "https://www.github.com/replicatedhq/kots"
-        branch: "${process.env.GITHUB_REF_NAME}"
+        branch: "${PREVIEW_NAME}"
     ){
         id
     }
