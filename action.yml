@@ -1,0 +1,9 @@
+name: Okteto Test
+description: 'Test Okteto development environment'
+inputs:
+  token:
+    required: true
+    description: Okteto API token.
+runs:
+  using: 'node16'
+  main: 'index.js'
