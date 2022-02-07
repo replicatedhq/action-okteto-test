@@ -5,7 +5,7 @@ import { setInterval } from 'timers/promises';
 
 const OKTETO_API = 'https://replicated.okteto.dev/graphql';
 const OKTETO_TOKEN = core.getInput('token')
-const PREVIEW_NAME = process.env.GITHUB_REF_NAME;
+const PREVIEW_NAME = core.getInput('branch');
 
 const statusQuery = {
     query: `
