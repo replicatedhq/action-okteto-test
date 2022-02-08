@@ -51,8 +51,8 @@ axios.defaults.headers['Authorization'] = `Bearer ${OKTETO_TOKEN}`;
 
 core.info(`Creating preview ${PREVIEW_NAME}`);
 const deployPreviewMutationResponse = await axios.post(OKTETO_API, deployPreviewMutation);
-const previewId = deployPreviewMutationResponse.data.data.id;
-core.info(`previewId ${previewId}`);
+const previewId = deployPreviewMutationResponse.data.id;
+core.info(`previewId ${JSON.stringify(deployPreviewMutationResponse.data)}`);
 
 const apiStatusChecker = setInterval(10000);
 for await (const _ of apiStatusChecker) {
