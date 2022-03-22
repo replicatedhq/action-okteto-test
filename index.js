@@ -54,7 +54,7 @@ const deployPreviewMutationResponse = await axios.post(OKTETO_API, deployPreview
 if(deployPreviewMutationResponse.data?.errors) {
     core.error(deployPreviewMutationResponse.data?.errors);
     core.setFailed('Failed creating preview in Okteto.');
-    return;
+    process.exit(1);
 }
 const previewId = deployPreviewMutationResponse.data.data.deployPreview.id;
 core.info(`previewId ${previewId}`);
