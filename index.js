@@ -4,7 +4,8 @@ import { setInterval } from 'timers/promises';
 
 const OKTETO_API = 'https://replicated.okteto.dev/graphql';
 const OKTETO_TOKEN = core.getInput('token')
-const PREVIEW_NAME = core.getInput('branch').substring(0, 62); // Max name lenth is 63 characters in Okteto
+const BRANCH_NAME = core.getInput('branch');
+const PREVIEW_NAME = BRANCH_NAME.substring(0, 62); // Max name length is 63 characters in Okteto
 
 const fetchPreviewStatus = (previewId) => {
     const statusQuery = {
@@ -40,7 +41,7 @@ mutation{
         name: "${PREVIEW_NAME}"
         scope: global
         repository: "https://www.github.com/replicatedhq/kots"
-        branch: "${PREVIEW_NAME}"
+        branch: "${BRANCH_NAME}"
     ){
         id
     }
