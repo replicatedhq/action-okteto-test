@@ -4,7 +4,7 @@ import { setInterval } from 'timers/promises';
 
 const OKTETO_API = 'https://replicated.okteto.dev/graphql';
 const OKTETO_TOKEN = core.getInput('token')
-const PREVIEW_NAME = core.getInput('branch');
+const PREVIEW_NAME = core.getInput('branch').substring(0, 62); // Max name lenth is 63 characters in Okteto
 
 const fetchPreviewStatus = (previewId) => {
     const statusQuery = {
@@ -51,6 +51,11 @@ axios.defaults.headers['Authorization'] = `Bearer ${OKTETO_TOKEN}`;
 
 core.info(`Creating preview ${PREVIEW_NAME}`);
 const deployPreviewMutationResponse = await axios.post(OKTETO_API, deployPreviewMutation);
+if(deployPreviewMutationResponse.data?.errors) {
+    core.error(deployPreviewMutationResponse.data?.errors);
+    core.setFailed('Failed creating preview in Okteto.');
+    return;
+}
 const previewId = deployPreviewMutationResponse.data.data.deployPreview.id;
 core.info(`previewId ${previewId}`);
 
